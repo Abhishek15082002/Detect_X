@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "563207654909",
+    "project_id": "phonix-6969",
+    "storage_bucket": "phonix-6969.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:563207654909:android:252016c58337dd57d31d94",
+        "android_client_info": {
+          "package_name": "com.example.blabla"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwQ0GcL_ShJruw6qYOexTN2qs_mDx2hNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

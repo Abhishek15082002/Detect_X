@@ -9,7 +9,7 @@ import 'package:tencent_trtc_cloud/trtc_cloud_def.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_listener.dart';
 import 'package:tencent_trtc_cloud/trtc_cloud_video_view.dart';
 import 'package:tencent_trtc_cloud/tx_device_manager.dart';
-import 'package:tflite_audio/tflite_audio.dart';
+// import 'package:tflite_audio/tflite_audio.dart';
 import 'generate_test_user_sig.dart';
 
 class VideoCallingPage extends StatefulWidget {
@@ -43,12 +43,12 @@ class VideoCallingPageState extends State<VideoCallingPage> {
   final int numOfInferences = 5;
 
   void getResult() async {
-    result = TfliteAudio.startAudioRecognition(
-      sampleRate: sampleRate,
-      bufferSize: bufferSize,
-      numOfInferences: 10000,
-    );
-    result?.listen((_) {}).onDone(() => isRecording.value = false);
+    // result = TfliteAudio.startAudioRecognition(
+    //   sampleRate: sampleRate,
+    //   bufferSize: bufferSize,
+    //   numOfInferences: 10000,
+    // );
+    // result?.listen((_) {}).onDone(() => isRecording.value = false);
   }
 
   Future<List<String>> fetchLabelList() async {
@@ -68,12 +68,12 @@ class VideoCallingPageState extends State<VideoCallingPage> {
   void initState() {
     super.initState();
     startPushStream();
-    TfliteAudio.loadModel(
-      inputType: inputType,
-      model: model,
-      label: label,
-    );
-    TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
+    // TfliteAudio.loadModel(
+    //   inputType: inputType,
+    //   model: model,
+    //   label: label,
+    // );
+    // TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
 
     getResult();
   }

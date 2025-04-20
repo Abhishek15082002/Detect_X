@@ -1,5 +1,6 @@
 import 'package:blabla/pages/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 import './firebase_options.dart';
@@ -19,10 +20,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Phonics',
+      title: 'Detect X',
       theme: ThemeData(
-        brightness: Brightness.dark,
-        scaffoldBackgroundColor: const Color(0xFF242627),
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.white,
+        cardTheme: CardThemeData(
+          shadowColor: Colors.black.withAlpha(128)
+        )
       ),
       home: const SplashScreen(),
     );

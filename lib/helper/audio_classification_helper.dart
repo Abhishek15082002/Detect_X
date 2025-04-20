@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
-import 'package:tflite_audio/tflite_audio.dart';
+// import 'package:tflite_audio/tflite_audio.dart';
 
 class TFLiteModel{
   final String model = 'assets/model.tflite';
@@ -14,22 +14,22 @@ class TFLiteModel{
   Stream<Map<dynamic, dynamic>>? result;
 
   void init(){
-    TfliteAudio.loadModel(
-      inputType: inputType,
-      model: model,
-      label: label,
-    );
-
-    TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
+    // TfliteAudio.loadModel(
+    //   inputType: inputType,
+    //   model: model,
+    //   label: label,
+    // );
+    //
+    // TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
   }
 
-  Stream<Map<dynamic, dynamic>> getResult() {
-    return TfliteAudio.startAudioRecognition(
-      sampleRate: sampleRate,
-      bufferSize: bufferSize,
-      numOfInferences: numOfInferences,
-    );
-  }
+  // Stream<Map<dynamic, dynamic>> getResult() {
+  //   return TfliteAudio.startAudioRecognition(
+  //     sampleRate: sampleRate,
+  //     bufferSize: bufferSize,
+  //     numOfInferences: numOfInferences,
+  //   );
+  // }
 
   Future<List<String>> fetchLabelList() async {
     List<String> labelList = [];

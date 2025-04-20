@@ -15,6 +15,15 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   FirebaseDatabase.instance.ref("kuchbhi").set({"kuchnhi": "lamba"});
+  //
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

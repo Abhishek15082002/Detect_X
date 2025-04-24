@@ -50,19 +50,21 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyAwQ0GcL_ShJruw6qYOexTN2qs_mDx2hNM',
-    appId: '1:563207654909:android:252016c58337dd57d31d94',
-    messagingSenderId: '563207654909',
-    projectId: 'phonix-6969',
-    storageBucket: 'phonix-6969.firebasestorage.app',
+    apiKey: 'AIzaSyBGdR4dF_SbsAYI3EDnnT6V_y12YGJb2G4',
+    appId: '1:629707433486:android:d891877ba5bcfbf8eabe5f',
+    messagingSenderId: '629707433486',
+    projectId: 'phonix-eb736',
+    databaseURL: 'https://phonix-eb736-default-rtdb.firebaseio.com',
+    storageBucket: 'phonix-eb736.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBVm2ltjiH7SS7LN9OIosrQ751OItig-6g',
-    appId: '1:563207654909:ios:0a1a523b6961d478d31d94',
-    messagingSenderId: '563207654909',
-    projectId: 'phonix-6969',
-    storageBucket: 'phonix-6969.firebasestorage.app',
+    apiKey: 'AIzaSyCd7hag2Qcwavya4FeSa1RyJNyTRw66GLI',
+    appId: '1:629707433486:ios:21e73d367eb391c9eabe5f',
+    messagingSenderId: '629707433486',
+    projectId: 'phonix-eb736',
+    databaseURL: 'https://phonix-eb736-default-rtdb.firebaseio.com',
+    storageBucket: 'phonix-eb736.firebasestorage.app',
     iosBundleId: 'com.example.blabla',
   );
 

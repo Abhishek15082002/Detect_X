@@ -1,17 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:blabla/pages/login.dart';
 
 class MySignUp extends StatefulWidget {
   const MySignUp({Key? key}) : super(key: key);
 
   @override
-  _MySignUpState createState() => _MySignUpState();
+  MySignUpState createState() => MySignUpState();
 }
 
-class _MySignUpState extends State<MySignUp> {
+class MySignUpState extends State<MySignUp> {
   final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -38,7 +36,6 @@ class _MySignUpState extends State<MySignUp> {
           fit: BoxFit.cover,
         ),
       ),
-
       child: Scaffold(
         // appBar: AppBar(
         //   // backgroundColor: Colors.purpleAccent,
@@ -57,10 +54,7 @@ class _MySignUpState extends State<MySignUp> {
         //     ],
         //   ),
         // ),
-
         backgroundColor: Colors.transparent,
-
-
         body: !isLoading ? Stack(
           children: [
             Container( //1 for image
@@ -77,15 +71,6 @@ class _MySignUpState extends State<MySignUp> {
                 ],
               ),
             ),
-
-            Container(
-              padding: EdgeInsets.symmetric(horizontal:95, vertical: 320),
-              child: Text(
-                'WELCOME',
-                style: TextStyle(color: Colors.blue.shade900, fontSize: 46),
-              ),
-            ),
-
             SingleChildScrollView(
               child: Container(
                 padding: EdgeInsets.only(
@@ -101,13 +86,7 @@ class _MySignUpState extends State<MySignUp> {
                       TextFormField(
                         controller: _nameController,
                         decoration: InputDecoration(
-                          fillColor: Colors.grey.shade200,
-                          filled: true,
                           hintText: "Name",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            // borderSide : Colors.blue,
-                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -120,12 +99,7 @@ class _MySignUpState extends State<MySignUp> {
                         controller: _phoneController,
                         keyboardType: TextInputType.phone,
                         decoration: InputDecoration(
-                          fillColor: Colors.grey.shade300,
-                          filled: true,
                           hintText: "Phone",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -140,12 +114,7 @@ class _MySignUpState extends State<MySignUp> {
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
-                          fillColor: Colors.grey.shade300,
-                          filled: true,
                           hintText: "Email",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -161,12 +130,7 @@ class _MySignUpState extends State<MySignUp> {
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
-                          fillColor: Colors.grey.shade300,
-                          filled: true,
                           hintText: "Password",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -233,11 +197,8 @@ class _MySignUpState extends State<MySignUp> {
         setState(() => isLoading = true);
       }
     } catch (e) {
-      print("Error signing up : +++++  $e");
-      // provider.registeringUser = false;
-
       if (e is FirebaseAuthException) {
-        if (e.code == 'email-already-in-use' && mounted) {
+        if (e.code == 'email-already-in-use' && context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("User already registered"))
           );

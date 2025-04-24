@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:blabla/pages/audio_upload_screen.dart';
-import 'package:blabla/pages/image_upload_screen.dart';
+
+import 'audio_upload_screen.dart';
+import 'image_upload_screen.dart';
 
 class Choose extends StatefulWidget {
   const Choose({super.key});
 
   @override
-  _ChooseState createState() => _ChooseState();
+  ChooseState createState() => ChooseState();
 }
 
-class _ChooseState extends State<Choose> {
+class ChooseState extends State<Choose> {
   void _onCardTapped(String courseName) {
     if (courseName == "Audio Detection") {
       Navigator.push(

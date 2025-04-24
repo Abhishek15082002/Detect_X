@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "563207654909",
-    "project_id": "phonix-6969",
-    "storage_bucket": "phonix-6969.firebasestorage.app"
+    "project_number": "629707433486",
+    "firebase_url": "https://phonix-eb736-default-rtdb.firebaseio.com",
+    "project_id": "phonix-eb736",
+    "storage_bucket": "phonix-eb736.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:563207654909:android:252016c58337dd57d31d94",
+        "mobilesdk_app_id": "1:629707433486:android:d891877ba5bcfbf8eabe5f",
         "android_client_info": {
           "package_name": "com.example.blabla"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAwQ0GcL_ShJruw6qYOexTN2qs_mDx2hNM"
+          "current_key": "AIzaSyBGdR4dF_SbsAYI3EDnnT6V_y12YGJb2G4"
         }
       ],
       "services": {

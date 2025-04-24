@@ -28,9 +28,10 @@ dependencies:
   permission_handler: ^12.0.0+1
   tencent_trtc_cloud: ^3.0.0
   flutter_sound: ^9.28.0
-  fftea: ^1.5.0+1
   tflite_flutter: ^0.11.0
   iconsax: ^0.0.8
+  collection: ^1.19.0
+  image: ^4.5.4
 #  tflite_audio: ^0.3.0
 
 dev_dependencies:
@@ -44,6 +45,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/models/
 
   fonts:
     - family: Gilroy

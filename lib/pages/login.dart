@@ -2,12 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
-import 'choose.dart';
-
 class MyLogin extends StatefulWidget {
   final String registeredEmail;
   final String registeredPassword;
-
 
   const MyLogin({
     super.key,
@@ -47,14 +44,14 @@ class MyLoginState extends State<MyLogin> {
       });
 
       // Navigate to Choose screen
-      Future.delayed(const Duration(milliseconds: 500), () {
-        if(mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) => const Choose()),
-          );
-        }
-      });
+      // Future.delayed(const Duration(milliseconds: 500), () {
+        // if(mounted) {
+          // Navigator.pushReplacement(
+          //   context,
+          //   MaterialPageRoute(builder: (_) => const Choose()),
+          // );
+        // }
+      // });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Invalid email or password')),

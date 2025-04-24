@@ -32,7 +32,7 @@ class MySignUpState extends State<MySignUp> {
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/BackGround.png'),
+          image: AssetImage('assets/backGround.png'),
           fit: BoxFit.cover,
         ),
       ),
@@ -55,112 +55,101 @@ class MySignUpState extends State<MySignUp> {
         //   ),
         // ),
         backgroundColor: Colors.transparent,
-        body: !isLoading ? Stack(
-          children: [
-            Container( //1 for image
-              alignment: Alignment.topCenter,
-              padding: const EdgeInsets.only(top: 30),
+        body: !isLoading ? SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.only(
+              top: 48,
+              right: 24,
+              left: 24,
+            ),
+            child: Form(
+              key: _formKey,
               child: Column(
-                mainAxisSize: MainAxisSize.min,
+                spacing: 16,
                 children: [
                   Image.asset(
                     'assets/logo.png',
-                    height: 350,
+                    height: 200,
+                    width: MediaQuery.of(context).size.width,
+                    fit: BoxFit.cover,
                   ),
-
+                  const SizedBox(),
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      hintText: "Name",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _phoneController,
+                    keyboardType: TextInputType.phone,
+                    decoration: InputDecoration(
+                      hintText: "Phone",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your phone number';
+                      } else if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                        return 'Enter a valid 10-digit phone number';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: InputDecoration(
+                      hintText: "Email",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      } else if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
+                          .hasMatch(value)) {
+                        return 'Enter a valid email address';
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "Password",
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter password';
+                      } else if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(),
+                  ElevatedButton(
+                    onPressed: () => handleSignUp(context),
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue.shade900,
+                        foregroundColor: Colors.white,
+                        textStyle: TextStyle(fontSize: 20),
+                        minimumSize: Size(400, 60),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12)
+                        )
+                    ),
+                    child: Text("Sign Up"),
+                  )
                 ],
               ),
             ),
-            SingleChildScrollView(
-              child: Container(
-                padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.44,
-                  right: 24,
-                  left: 24,
-                ),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    spacing: 16,
-                    children: [
-                      TextFormField(
-                        controller: _nameController,
-                        decoration: InputDecoration(
-                          hintText: "Name",
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        controller: _phoneController,
-                        keyboardType: TextInputType.phone,
-                        decoration: InputDecoration(
-                          hintText: "Phone",
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your phone number';
-                          } else if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
-                            return 'Enter a valid 10-digit phone number';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        controller: _emailController,
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          hintText: "Email",
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your email';
-                          } else if (!RegExp(r'^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$')
-                              .hasMatch(value)) {
-                            return 'Enter a valid email address';
-                          }
-                          return null;
-                        },
-                      ),
-                      TextFormField(
-                        controller: _passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          hintText: "Password",
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Enter password';
-                          } else if (value.length < 6) {
-                            return 'Password must be at least 6 characters';
-                          }
-                          return null;
-                        },
-                      ),
-                      const SizedBox(),
-                      ElevatedButton(
-                        onPressed: () => handleSignUp(context),
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blue.shade900,
-                            foregroundColor: Colors.white,
-                            textStyle: TextStyle(fontSize: 20),
-                            minimumSize: Size(400, 60),
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12)
-                            )
-                        ),
-                        child: Text("Sign Up"),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ):  Center(child: CircularProgressIndicator()),
       ),
     );

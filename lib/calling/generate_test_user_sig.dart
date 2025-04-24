@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:crypto/crypto.dart';
 
 class GenerateTestUserSig {
-  static int sdkAppId = 20008538;
-  static int expireTime = 604800;
-  static String secretKey = '8e9049f0333ea22d30c43538eb3ccda39c9630b58804605cf633f6616d89bbdf';
+  static int sdkAppId = 20022321;
+  // static int expireTime = 604800;
+  static String secretKey = '344692cd93bdf2e02be060d8f8755e5237059fe9bee25a151d6f88fa21c08c46';
   static int appId = 1256635546;
   static int bizId = 93434;
 
@@ -17,14 +17,14 @@ class GenerateTestUserSig {
       "TLS.ver": "2.0",
       "TLS.identifier": userId,
       "TLS.sdkappid": sdkAppId,
-      "TLS.expire": expireTime,
-      "TLS.time": currTime,
+      // "TLS.expire": expireTime,
+      // "TLS.time": currTime,
     });
 
     sig = _hmacSHA256(
       identifier: userId,
       currTime: currTime,
-      expire: expireTime,
+      // expire: expireTime,
     );
     sigDoc['TLS.sig'] = sig;
     String jsonStr = json.encode(sigDoc);
@@ -39,11 +39,11 @@ class GenerateTestUserSig {
   static String _hmacSHA256({
     required String identifier,
     required int currTime,
-    required int expire,
+    // required int expire,
   }) {
     int sdkappid = sdkAppId;
     String contentToBeSigned =
-        "TLS.identifier:$identifier\nTLS.sdkappid:$sdkappid\nTLS.time:$currTime\nTLS.expire:$expire\n";
+        "TLS.identifier:$identifier\nTLS.sdkappid:$sdkappid\nTLS.time:$currTime\n";
     Hmac hmacSha256 = Hmac(sha256, utf8.encode(secretKey));
     Digest hmacSha256Digest =
         hmacSha256.convert(utf8.encode(contentToBeSigned));

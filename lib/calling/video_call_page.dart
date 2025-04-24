@@ -101,6 +101,14 @@ class VideoCallingPageState extends State<VideoCallingPage> {
 
   onTrtcListener(type, params) async {
     switch (type) {
+      case TRTCCloudListener.onRemoteUserLeaveRoom:
+        onRemoteUserLeaveRoom(params["userId"], params['reason']);
+        break;
+      case TRTCCloudListener.onUserVideoAvailable:
+        onUserVideoAvailable(params["userId"], params['available']);
+        break;
+      /*case TRTCCloudListener.onUserSubStreamAvailable:
+        break;
       case TRTCCloudListener.onError:
         break;
       case TRTCCloudListener.onWarning:
@@ -113,19 +121,11 @@ class VideoCallingPageState extends State<VideoCallingPage> {
         break;
       case TRTCCloudListener.onRemoteUserEnterRoom:
         break;
-      case TRTCCloudListener.onRemoteUserLeaveRoom:
-        onRemoteUserLeaveRoom(params["userId"], params['reason']);
-        break;
       case TRTCCloudListener.onConnectOtherRoom:
         break;
       case TRTCCloudListener.onDisConnectOtherRoom:
         break;
       case TRTCCloudListener.onSwitchRoom:
-        break;
-      case TRTCCloudListener.onUserVideoAvailable:
-        onUserVideoAvailable(params["userId"], params['available']);
-        break;
-      case TRTCCloudListener.onUserSubStreamAvailable:
         break;
       case TRTCCloudListener.onUserAudioAvailable:
         break;
@@ -192,7 +192,8 @@ class VideoCallingPageState extends State<VideoCallingPage> {
       case TRTCCloudListener.onTestMicVolume:
         break;
       case TRTCCloudListener.onTestSpeakerVolume:
-        break;
+        break;*/
+      default: break;
     }
   }
 

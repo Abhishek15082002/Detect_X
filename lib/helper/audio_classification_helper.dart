@@ -1,43 +1,69 @@
-import 'dart:convert';
+/*
+ * Copyright 2023 The TensorFlow Authors. All Rights Reserved.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *             http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import 'dart:developer';
+import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
-// import 'package:tflite_audio/tflite_audio.dart';
+import 'package:tflite_flutter/tflite_flutter.dart';
 
-class TFLiteModel{
-  final String model = 'assets/model.tflite';
-  final String label = 'assets/labels.txt';
-  final String inputType = 'rawAudio';
-  final int sampleRate = 44100;
-  final int bufferSize = 11016;
-  final int numOfInferences = 10000;
+class AudioClassificationHelper {
+  static const _modelPath = 'assets/models/model.tflite';
+  static const _labelsPath = 'assets/models/labels.txt';
 
-  Stream<Map<dynamic, dynamic>>? result;
+  late Interpreter _interpreter;
+  late final List<String> _labels;
+  late Tensor _inputTensor;
+  late Tensor _outputTensor;
 
-  void init(){
-    // TfliteAudio.loadModel(
-    //   inputType: inputType,
-    //   model: model,
-    //   label: label,
-    // );
-    //
-    // TfliteAudio.setSpectrogramParameters(nMFCC: 40, hopLength: 16384);
+  Future<void> _loadModel() async {
+    final options = InterpreterOptions();
+    // Load model from assets
+    _interpreter = await Interpreter.fromAsset(_modelPath, options: options);
+
+    _inputTensor = _interpreter.getInputTensors().first;
+    log(_inputTensor.shape.toString());
+    _outputTensor = _interpreter.getOutputTensors().first;
+    log(_outputTensor.shape.toString());
+    log('Interpreter loaded successfully');
   }
 
-  // Stream<Map<dynamic, dynamic>> getResult() {
-  //   return TfliteAudio.startAudioRecognition(
-  //     sampleRate: sampleRate,
-  //     bufferSize: bufferSize,
-  //     numOfInferences: numOfInferences,
-  //   );
-  // }
+  // Load labels from assets
+  Future<void> _loadLabels() async {
+    final labelTxt = await rootBundle.loadString(_labelsPath);
+    _labels = labelTxt.split('\n');
+  }
 
-  Future<List<String>> fetchLabelList() async {
-    List<String> labelList = [];
-    await rootBundle.loadString(label).then((q) {
-      for (String i in const LineSplitter().convert(q)) {
-        labelList.add(i);
-      }
-    });
-    return labelList;
+  Future<void> initHelper() async {
+    await _loadLabels();
+    await _loadModel();
+  }
+
+  Future<Map<String, double>> inference(Float32List input) async {
+    final output = [List<double>.filled(521, 0.0)];
+    _interpreter.run(List.of(input), output);
+    var classification = <String, double>{};
+    for (var i = 0; i < output[0].length; i++) {
+      // Set label: points
+      classification[_labels[i]] = output[0][i];
+    }
+    return classification;
+  }
+
+  closeInterpreter() {
+    _interpreter.close();
   }
 }

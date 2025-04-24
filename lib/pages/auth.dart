@@ -1,12 +1,11 @@
-import 'package:blabla/pages/Choose.dart';
-import 'package:blabla/pages/Signup.dart';
-import 'package:blabla/pages/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'login.dart';
+import 'home.dart';
+// import 'login.dart';
+import 'sign_up.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({Key? key}) : super(key: key);
@@ -41,7 +40,7 @@ class IndexPageState extends State<IndexPage> {
 
   @override
   Widget build(BuildContext context) {
-    String verificationID = "";
+    // String verificationID = "";
     return Scaffold(
       body: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
@@ -148,7 +147,7 @@ class IndexPageState extends State<IndexPage> {
             ],
           ),
         )*/ :
-        const Choose();
+        const HomePage();
       }),
     );
   }

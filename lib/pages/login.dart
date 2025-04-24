@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:blabla/pages/signup.dart';
-import 'package:blabla/pages/choose.dart'; // Import the Choose screen
+
+import 'choose.dart';
 
 class MyLogin extends StatefulWidget {
   final String registeredEmail;
@@ -10,15 +10,16 @@ class MyLogin extends StatefulWidget {
 
 
   const MyLogin({
+    super.key,
     required this.registeredEmail,
     required this.registeredPassword,
   });
 
   @override
-  _MyLoginState createState() => _MyLoginState();
+  MyLoginState createState() => MyLoginState();
 }
 
-class _MyLoginState extends State<MyLogin> {
+class MyLoginState extends State<MyLogin> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -32,7 +33,7 @@ class _MyLoginState extends State<MyLogin> {
     super.dispose();
   }
 
-  void _handleLogin() {
+  void handleSwitchToLogin() {
     final enteredEmail = _emailController.text;
     final enteredPassword = _passwordController.text;
 
@@ -47,10 +48,12 @@ class _MyLoginState extends State<MyLogin> {
 
       // Navigate to Choose screen
       Future.delayed(const Duration(milliseconds: 500), () {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) => const Choose()),
-        );
+        if(mounted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (_) => const Choose()),
+          );
+        }
       });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -132,7 +135,7 @@ class _MyLoginState extends State<MyLogin> {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: _handleLogin,
+                      onPressed: handleSwitchToLogin,
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue.shade900,
                           foregroundColor: Colors.white,
@@ -151,7 +154,7 @@ class _MyLoginState extends State<MyLogin> {
                         style: TextStyle(color: Colors.white),
                       ),
                       TextButton(
-                        onPressed: (() => handleSignIn(context)),
+                        onPressed: (() => handleLogin(context)),
                         child: const Text(
                           "New here? Sign Up",
                           style: TextStyle(
@@ -172,67 +175,70 @@ class _MyLoginState extends State<MyLogin> {
     );
   }
 
-   handleSignIn(BuildContext context) {
-     Future<void> handleLogin(BuildContext context) async {
-       // Get values from controllers
-       String email = _emailController.text.trim();
-       String password = _passwordController.text;
+  Future<void> handleLogin(BuildContext context) async {
+    // Get values from controllers
+    String email = _emailController.text.trim();
+    String password = _passwordController.text;
 
-       // UserProvider provider = Provider.of<UserProvider>(context, listen: false);
+    // UserProvider provider = Provider.of<UserProvider>(context, listen: false);
 
-       try {
-         // provider.loggingIn = true;
+    try {
+      // provider.loggingIn = true;
 
-         // Sign in user with email and password
-         UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-           email: email,
-           password: password,
-         );
+      // Sign in user with email and password
+      // UserCredential userCredential =
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-         // Get the user ID
-         String userId = userCredential.user?.uid ?? "";
-         // provider.user.id = userId;
+      // Get the user ID
+      // String userId = userCredential.user?.uid ?? "";
+      // provider.user.id = userId;
 
-         // provider.loggingIn = false;
+      // provider.loggingIn = false;
 
-         if (mounted) {
-           // Navigate to home or dashboard screen after successful login
-           setState(() => isLoading = true);
-         }
-       } catch (e) {
-         // provider.loggingIn = false;
+      if (mounted) {
+        // Navigate to home or dashboard screen after successful login
+        setState(() => isLoading = true);
+      }
+    } catch (e) {
+      // provider.loggingIn = false;
 
-         if (e is FirebaseAuthException) {
-           if (e.code == 'user-not-found') {
-             ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(content: Text("No user found with this email"))
-             );
-           } else if (e.code == 'wrong-password') {
-             ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(content: Text("Incorrect password"))
-             );
-           } else {
-             // Log the error to Realtime Database
-             await FirebaseDatabase.instance.ref()
-                 .child("logs")
-                 .push()
-                 .set({
-               "error": "Login error: ${e.code}",
-               "stack_trace": e.message,
-               "timestamp": ServerValue.timestamp,
-             });
+      if (e is FirebaseAuthException) {
+        if(context.mounted) {
+          if (e.code == 'user-not-found') {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("No user found with this email"))
+            );
+          } else if (e.code == 'wrong-password') {
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text("Incorrect password"))
+            );
+          } else {
+            // Log the error to Realtime Database
+            await FirebaseDatabase.instance.ref()
+                .child("logs")
+                .push()
+                .set({
+              "error": "Login error: ${e.code}",
+              "stack_trace": e.message,
+              "timestamp": ServerValue.timestamp,
+            });
 
-             ScaffoldMessenger.of(context).showSnackBar(
-                 SnackBar(content: Text("Login failed. Please try again."))
-             );
-           }
-         }
+            if (context.mounted) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Login failed. Please try again."))
+              );
+            }
+          }
+        }
+      }
 
-         // Stay on login screen
-         if (mounted) {
-           setState(() => isLoading = false);
-         }
-       }
-     }
-   }
+      // Stay on login screen
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
+    }
+  }
 }
